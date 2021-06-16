@@ -133,6 +133,10 @@ inline T Atomic::PlatformCmpxchg<1>::operator()(T volatile* dest,
   switch (order) {
   case memory_order_relaxed:
     stub = aarch64_atomic_cmpxchg_1_relaxed_impl; break;
+  case memory_order_release:
+    stub = aarch64_atomic_cmpxchg_1_release_impl; break;
+  case memory_order_acquire:
+    stub = aarch64_atomic_cmpxchg_1_acquire_impl; break;
   default:
     stub = aarch64_atomic_cmpxchg_1_impl; break;
   }
@@ -151,6 +155,10 @@ inline T Atomic::PlatformCmpxchg<4>::operator()(T volatile* dest,
   switch (order) {
   case memory_order_relaxed:
     stub = aarch64_atomic_cmpxchg_4_relaxed_impl; break;
+  case memory_order_release:
+    stub = aarch64_atomic_cmpxchg_4_release_impl; break;
+  case memory_order_acquire:
+    stub = aarch64_atomic_cmpxchg_4_acquire_impl; break;
   default:
     stub = aarch64_atomic_cmpxchg_4_impl; break;
   }
@@ -169,6 +177,10 @@ inline T Atomic::PlatformCmpxchg<8>::operator()(T volatile* dest,
   switch (order) {
   case memory_order_relaxed:
     stub = aarch64_atomic_cmpxchg_8_relaxed_impl; break;
+  case memory_order_release:
+    stub = aarch64_atomic_cmpxchg_8_release_impl; break;
+  case memory_order_acquire:
+    stub = aarch64_atomic_cmpxchg_8_acquire_impl; break;
   default:
     stub = aarch64_atomic_cmpxchg_8_impl; break;
   }

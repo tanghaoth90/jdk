@@ -7201,6 +7201,12 @@ DEFAULT_ATOMIC_OP(cmpxchg, 8, )
 DEFAULT_ATOMIC_OP(cmpxchg, 1, _relaxed)
 DEFAULT_ATOMIC_OP(cmpxchg, 4, _relaxed)
 DEFAULT_ATOMIC_OP(cmpxchg, 8, _relaxed)
+DEFAULT_ATOMIC_OP(cmpxchg, 1, _release)
+DEFAULT_ATOMIC_OP(cmpxchg, 4, _release)
+DEFAULT_ATOMIC_OP(cmpxchg, 8, _release)
+DEFAULT_ATOMIC_OP(cmpxchg, 1, _acquire)
+DEFAULT_ATOMIC_OP(cmpxchg, 4, _acquire)
+DEFAULT_ATOMIC_OP(cmpxchg, 8, _acquire)
 
 #undef DEFAULT_ATOMIC_OP
 

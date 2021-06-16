@@ -148,3 +148,77 @@ aarch64_atomic_cmpxchg_8_relaxed_default_impl:
         cbnz    w8, 0b
 1:      mov     x0, x3
         ret
+
+        .globl aarch64_atomic_cmpxchg_1_release_default_impl
+        .align 5
+aarch64_atomic_cmpxchg_1_release_default_impl:
+        prfm    pstl1strm, [x0]
+0:      ldxrb   w3, [x0]
+        eor     w8, w3, w1
+        tst     x8, #0xff
+        b.ne    1f
+        stlxrb  w8, w2, [x0]
+        cbnz    w8, 0b
+1:      mov     w0, w3
+        ret
+
+        .globl aarch64_atomic_cmpxchg_4_release_default_impl
+        .align 5
+aarch64_atomic_cmpxchg_4_release_default_impl:
+        prfm    pstl1strm, [x0]
+0:      ldxr    w3, [x0]
+        cmp     w3, w1
+        b.ne    1f
+        stlxr   w8, w2, [x0]
+        cbnz    w8, 0b
+1:      mov     w0, w3
+        ret
+
+        .globl aarch64_atomic_cmpxchg_8_release_default_impl
+        .align 5
+aarch64_atomic_cmpxchg_8_release_default_impl:
+        prfm    pstl1strm, [x0]
+0:      ldxr    x3, [x0]
+        cmp     x3, x1
+        b.ne    1f
+        stlxr   w8, x2, [x0]
+        cbnz    w8, 0b
+1:      mov     x0, x3
+        ret
+
+        .globl aarch64_atomic_cmpxchg_1_acquire_default_impl
+        .align 5
+aarch64_atomic_cmpxchg_1_acquire_default_impl:
+        prfm    pstl1strm, [x0]
+0:      ldaxrb  w3, [x0]
+        eor     w8, w3, w1
+        tst     x8, #0xff
+        b.ne    1f
+        stxrb   w8, w2, [x0]
+        cbnz    w8, 0b
+1:      mov     w0, w3
+        ret
+
+        .globl aarch64_atomic_cmpxchg_4_acquire_default_impl
+        .align 5
+aarch64_atomic_cmpxchg_4_acquire_default_impl:
+        prfm    pstl1strm, [x0]
+0:      ldaxr   w3, [x0]
+        cmp     w3, w1
+        b.ne    1f
+        stxr    w8, w2, [x0]
+        cbnz    w8, 0b
+1:      mov     w0, w3
+        ret
+
+        .globl aarch64_atomic_cmpxchg_8_acquire_default_impl
+        .align 5
+aarch64_atomic_cmpxchg_8_acquire_default_impl:
+        prfm    pstl1strm, [x0]
+0:      ldaxr   x3, [x0]
+        cmp     x3, x1
+        b.ne    1f
+        stxr    w8, x2, [x0]
+        cbnz    w8, 0b
+1:      mov     x0, x3
+        ret
