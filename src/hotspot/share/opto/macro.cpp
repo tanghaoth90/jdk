@@ -2410,10 +2410,12 @@ void PhaseMacroExpand::expand_allocate_array(AllocateArrayNode *alloc) {
          ary_klass_t->is_refined_type(), "Must be a refined array klass");
   const TypeFunc* slow_call_type;
   address slow_call_address;  // Address of slow call
-  if (init != nullptr && init->is_complete_with_arraycopy() &&
+  if (init != nullptr && init->is_complete() &&
       ary_klass_t && !ary_klass_t->elem()->is_klassptr()) {
-    // Don't zero type array during slow allocation in VM since
-    // it will be initialized later by arraycopy in compiled code.
+    // Don't zero type array during slow allocation in VM since it will be
+    // initialized later by arraycopy or other stores in compiled code, or
+    // initialization is deliberately omitted, as with
+    // Unsafe.allocateUninitializedArray.
     slow_call_address = OptoRuntime::new_array_nozero_Java();
     slow_call_type = OptoRuntime::new_array_nozero_Type();
   } else {
