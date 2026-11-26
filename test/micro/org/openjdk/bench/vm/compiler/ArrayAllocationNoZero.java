@@ -41,14 +41,14 @@ import org.openjdk.jmh.annotations.Warmup;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(iterations = 5, time = 1)
-@Measurement(iterations = 5, time = 1)
-@Fork(value = 3, jvmArgsAppend = {"--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"})
+@Warmup(iterations = 1, time = 10)
+@Measurement(iterations = 1, time = 60)
+@Fork(value = 1, jvmArgsAppend = {"--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"})
 @State(Scope.Thread)
 public class ArrayAllocationNoZero {
     private static final Unsafe UNSAFE = Unsafe.getUnsafe();
 
-    @Param({"32", "4096", "1048576"})
+    @Param({"4194304"})
     public int size;
 
     private String first;
@@ -60,11 +60,6 @@ public class ArrayAllocationNoZero {
     public void setup() {
         first = "a".repeat(size);
         second = "b".repeat(size);
-    }
-
-    @Benchmark
-    public byte[] allocateUninitialized() {
-        return (byte[]) UNSAFE.allocateUninitializedArray(byte.class, size);
     }
 
     @Benchmark
